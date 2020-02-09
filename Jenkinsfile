@@ -9,7 +9,9 @@ node {
       sh label: '', script: 'mvn clean package'
     }
     stage('DockerBuild') {
-      sh label: '', script: "docker build -t ${DOCKER_USERNAME}/my-app:0.0.0 ."
+      withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USERNAME')]) {
+        sh label: '', script: "docker build -t ${DOCKER_USERNAME}/my-app:0.0.0 ."
+      }
     }
     stage('DockerLogin') {
       withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USERNAME')]) {
@@ -17,6 +19,8 @@ node {
       }
     }
     stage('DockerPushToDockerHub') {
-      sh label: '', script: "docker push ${DOCKER_USERNAME}/my-app:0.0.0"
+      withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USERNAME')]) {
+        sh label: '', script: "docker push ${DOCKER_USERNAME}/my-app:0.0.0"
+      }
     }
 }
