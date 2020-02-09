@@ -49,4 +49,7 @@ node {
       }
     }
   }
+  stage('SendEmail') {
+    mail bcc: '', body: 'Job Was Successfully Build', cc: '', from: '', replyTo: '', subject: 'Myapp', to: 'devops.mptech@gmail.com'
+  }
 }
