@@ -1,0 +1,26 @@
+body{
+  background: url(https://res.cloudinary.com/twenty20/private_images/t_watermark-criss-cross-10/v1440721411000/photosp/42a0b5e6-71ac-4dcb-b898-7bcec145b212/stock-photo-nature-outdoors-winter-tree-forest-road-sky-frozen-ice-42a0b5e6-71ac-4dcb-b898-7bcec145b212.jpg)
+}
+h1{
+  color: blue;
+}
+p {
+    font-family: "Times New Roman", Times, serif;
+    color: red;
+    font-size: 25px
+}
+li{
+  color: blue;
+  font-size: 25px
+}
+div {
+    width: 320px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 0;
+}
+#borderimg {
+    border: 10px solid transparent;
+    padding: 15px;
+    border-image: url(border.png) 30 round;
+}
