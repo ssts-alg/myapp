@@ -8,4 +8,7 @@ node {
     stage('MavenBuildWithOutTests') {
       sh label: '', script: 'mvn clean package'
     }
+    stage('DockerBuild') {
+      sh label: '', script: 'docker build -t devopsmptech/my-app:0.0.0 .'
+    }
 }
