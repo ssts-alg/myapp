@@ -12,7 +12,7 @@ node {
       sh label: '', script: "docker build -t ${DOCKER_USERNAME}/my-app:0.0.0 ."
     }
     stage('DockerLogin') {
-      withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USERNAME')]) {
+      withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USERNAME')]) {
         sh label: '', script: "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASS}"
       }
     }
