@@ -28,6 +28,7 @@ pipeline {
     }
   }
 post {
+  agent master
   always { 
           sh '''
           docker rm -f $(docker ps -aq)
