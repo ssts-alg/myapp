@@ -3,6 +3,7 @@ pipeline {
   environment {
   DOCKER_TOKEN = credentials("DockerHub")
   }
+  properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']]]);
   stages {
         stage('Docker Login') {
             steps {
