@@ -2,14 +2,8 @@ pipeline {
   agent any
   environment {
   DOCKER_TOKEN = credentials("DockerHub")
-  GIT_TOKEN = credentials("GitHub")
   }
   stages {
-        stage("Build Status") {
-            steps {
-                githubNotify status: "PENDING", credentialsId: "${GIT_TOKEN}"
-            }
-        }
         stage('Docker Login') {
             steps {
                 echo 'Hello, Docker Login'
