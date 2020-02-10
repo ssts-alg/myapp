@@ -1,14 +1,21 @@
 pipeline {
   agent any
   environment {
-  DOCKER_TOKEN = credentials("DockerHub")
+  DOCKER_TOKEN = credentials("DOCKER_TOCKEN")
   }
   stages {
+        stage("Build Status") {
+            steps {
+              script {
+                setBuildStatus('pending', getOrg(env), getRepo(env), env.BUILD_URL, GitHub)
+              }
+            }
+          }
         stage('Docker Login') {
             steps {
                 echo 'Hello, Docker Login'
                 sh 'docker --version'
-                sh "docker login -u ${DOCKER_TOKEN_USR} -p ${DOCKER_TOKEN_PSW}"
+                sh "docker login -u devopsmptech -p ${DOCKER_TOCKEN}"
             }
         }
         stage('Build') {
@@ -35,7 +42,7 @@ pipeline {
     stage('Terraform') {
       agent {
           docker {
-              image 'devopsmptech/terrafom:latest'
+              image 'hashicorp/terraform:light'
               args '-i --entrypoint='
           }
         }
