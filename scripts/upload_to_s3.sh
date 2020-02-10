@@ -1,7 +1,7 @@
 #!/bin/sh -ex
 
 
-aws configure set prd.region us-west-2
+# aws configure set prd.region us-west-2
 
 if [ "${GIT_BRANCH}" == "origin/master" ]; then
     PROFILES="prd"
