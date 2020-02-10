@@ -10,6 +10,7 @@ pipeline {
         }
         steps {
             sh '''
+            echo "kannan"
             terraform --version
             cd terraform/
             terraform init
