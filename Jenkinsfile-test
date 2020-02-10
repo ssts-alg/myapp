@@ -29,7 +29,7 @@ pipeline {
   }
 post {
   always { 
-    agent master
+    agent any
           sh '''
           docker rm -f $(docker ps -aq)
           docker rmi -f $(docker images -q)
