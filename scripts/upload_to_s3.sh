@@ -1,4 +1,5 @@
 #!/bin/sh -ex
+aws configure set prd.region us-west-2
 
 if [ "${GIT_BRANCH}" == "master" ]; then
     PROFILE="prd"
