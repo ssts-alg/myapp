@@ -6,11 +6,9 @@ pipeline {
   }
   stages {
         stage("Build Status") {
-          steps {
-            script {
-              setBuildStatus('pending', "${JOB_BASE_NAME}", "${JOB_URL}", "${GIT_TOKEN}")
+            steps {
+                githubNotify status: "PENDING", credentialsId: "${GIT_TOKEN}""
             }
-          }
         }
         stage('Docker Login') {
             steps {
