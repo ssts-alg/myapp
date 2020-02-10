@@ -20,6 +20,12 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+        stage('Publish') {
+            steps {
+                sh 'chmod +x ./scripts/upload_to_s3.sh'
+                sh './scripts/upload_to_s3.sh'
+            }
+        }
         stage('Python') {
           agent {
               docker {
