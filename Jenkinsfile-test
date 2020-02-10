@@ -1,14 +1,14 @@
 pipeline {
   agent any
   environment {
-  DOCKER_TOKEN = credentials("DOCKER_TOCKEN")
+  DOCKER_TOKEN = credentials("DockerHub")
   }
   stages {
         stage('Docker Login') {
             steps {
                 echo 'Hello, Docker Login'
                 sh 'docker --version'
-                sh "docker login -u devopsmptech -p ${DOCKER_TOCKEN}"
+                sh "docker login -u ${DOCKER_TOKEN_USR} -p ${DOCKER_TOKEN_PSW}"
             }
         }
         stage('Build') {
