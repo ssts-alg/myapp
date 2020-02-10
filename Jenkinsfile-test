@@ -1,6 +1,13 @@
 pipeline {
   agent any
   stages {
+        stage('Docker Login') {
+            steps {
+                echo 'Hello, Docker Login'
+                sh 'docker --version'
+                sh 'docker login -u devopsmptech -p dockerhub.com'
+            }
+        }
         stage('Build') {
             agent { docker 'maven:3-alpine' } 
             steps {
