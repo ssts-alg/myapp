@@ -1,11 +1,11 @@
 pipeline {
   agent any
   environment {
-  DOCKER_TOKEN = credentials("DOCKER_TOCKEN")
-  ORG = getOrg(env)
-  REPO = getRepo(env)
-  // GIT_COMMIT = fetchGitCommitId()
-  GIT_TOKEN = credentials("GitHub")
+    DOCKER_TOKEN = credentials("DOCKER_TOCKEN")
+    // ORG = getOrg(env)
+    // REPO = getRepo(env)
+    // GIT_COMMIT = fetchGitCommitId()
+    GIT_TOKEN = credentials("GitHub")
   }
   stages {
         stage("Build Status") {
