@@ -4,7 +4,7 @@ pipeline {
   DOCKER_TOKEN = credentials("DOCKER_TOCKEN")
   ORG = getOrg(env)
   REPO = getRepo(env)
-  GIT_COMMIT = fetchGitCommitId()
+  // GIT_COMMIT = fetchGitCommitId()
   GIT_TOKEN = credentials("GitHub")
   }
   stages {
