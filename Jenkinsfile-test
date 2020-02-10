@@ -1,5 +1,5 @@
 pipeline {
-  agent none
+  agent any
   stages {
         stage('Build') {
             agent { docker 'maven:3-alpine' } 
@@ -29,7 +29,6 @@ pipeline {
   }
 post {
   always { 
-    agent any
           sh '''
           docker rm -f $(docker ps -aq)
           docker rmi -f $(docker images -q)
