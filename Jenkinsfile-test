@@ -12,6 +12,7 @@ pipeline {
             terraform --version
             cd terraform/
             terraform init
+            terraform plan
             '''
         }
     }
