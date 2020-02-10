@@ -11,7 +11,7 @@ pipeline {
         stage("Build Status") {
             steps {
               script {
-                setBuildStatus('pending', getOrg(env), getRepo(env), env.BUILD_URL, "${GIT_TOKEN}")
+                setBuildStatus('pending', getRepo(env), env.BUILD_URL, "${GIT_TOKEN}")
               }
             }
           }
