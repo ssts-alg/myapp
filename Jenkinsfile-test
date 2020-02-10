@@ -8,13 +8,13 @@ pipeline {
     GIT_TOKEN = credentials("GitHub")
   }
   stages {
-        stage("Build Status") {
-            steps {
-              script {
-                setBuildStatus('pending', getRepo(env), env.BUILD_URL, "${GIT_TOKEN}")
-              }
-            }
-          }
+//        stage("Build Status") {
+//           steps {
+//              script {
+//                setBuildStatus('pending', getRepo(env), env.BUILD_URL, "${GIT_TOKEN}")
+//              }
+//            }
+//          }
         stage('Docker Login') {
             steps {
                 echo 'Hello, Docker Login'
@@ -26,6 +26,7 @@ pipeline {
             agent { docker 'maven:3-alpine' } 
             steps {
                 echo 'Hello, Maven'
+                sh 'printenv'
                 sh 'mvn --version'
                 sh 'mvn clean package'
             }
