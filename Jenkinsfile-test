@@ -2,12 +2,13 @@ pipeline {
   agent any
   environment {
   DOCKER_TOKEN = credentials("DockerHub")
+  GIT_TOKEN = credentials("GitHub")
   }
   stages {
         stage("Build Status") {
           steps {
             script {
-              setBuildStatus('pending', ${JOB_BASE_NAME}, ${JOB_URL}, ${DOCKER_TOKEN})
+              setBuildStatus('pending', "${JOB_BASE_NAME}", "${JOB_URL}", "${GIT_TOKEN}")
             }
           }
         }
