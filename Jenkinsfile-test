@@ -9,6 +9,19 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+        stage('Python') {
+          agent {
+              docker {
+                  image 'python:latest'
+              }
+            }
+            steps {
+                sh '''
+                python --version
+                '''
+            }
+        }
+
     stage('Terraform') {
       agent {
           docker {
