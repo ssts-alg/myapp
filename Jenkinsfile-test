@@ -1,32 +1,21 @@
 pipeline {
   agent any
   environment {
-    DOCKER_TOKEN = credentials("DOCKER_TOCKEN")
-    // ORG = getOrg(env)
-    // REPO = getRepo(env)
-    // GIT_COMMIT = fetchGitCommitId()
-    GIT_TOKEN = credentials("GitHub")
+  DOCKER_TOKEN = credentials("DockerHub")
   }
   stages {
-//        stage("Build Status") {
-//           steps {
-//              script {
-//                setBuildStatus('pending', getRepo(env), env.BUILD_URL, "${GIT_TOKEN}")
-//              }
-//            }
-//          }
         stage('Docker Login') {
             steps {
                 echo 'Hello, Docker Login'
+                sh 'printenv'
                 sh 'docker --version'
-                sh "docker login -u devopsmptech -p ${DOCKER_TOCKEN}"
+                sh "docker login -u ${DOCKER_TOKEN_USR} -p ${DOCKER_TOKEN_PSW}"
             }
         }
         stage('Build') {
             agent { docker 'maven:3-alpine' } 
             steps {
                 echo 'Hello, Maven'
-                sh 'printenv'
                 sh 'mvn --version'
                 sh 'mvn clean package'
             }
@@ -47,7 +36,7 @@ pipeline {
     stage('Terraform') {
       agent {
           docker {
-              image 'hashicorp/terraform:light'
+              image 'devopsmptech/terrafom:latest'
               args '-i --entrypoint='
           }
         }
