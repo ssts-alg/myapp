@@ -4,6 +4,13 @@ pipeline {
   DOCKER_TOKEN = credentials("DockerHub")
   }
   stages {
+        stage("Build Status") {
+          steps {
+            script {
+              setBuildStatus('pending', ${JOB_BASE_NAME}, ${JOB_URL}, ${DOCKER_TOKEN})
+            }
+          }
+        }
         stage('Docker Login') {
             steps {
                 echo 'Hello, Docker Login'
@@ -13,7 +20,7 @@ pipeline {
             }
         }
         stage('Build') {
-            agent { docker 'maven:3-alpine' } 
+            agent { docker 'maven:3-alpine' }
             steps {
                 echo 'Hello, Maven'
                 sh 'mvn --version'
@@ -52,7 +59,7 @@ pipeline {
     }
   }
 post {
-  always { 
+  always {
           sh '''
             echo "I will execure always"
           '''
