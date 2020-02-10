@@ -1,11 +1,12 @@
 #!/bin/sh -ex
+
+
 aws configure set prd.region us-west-2
 
 if [ "${GIT_BRANCH}" == "origin/master" ]; then
-    PROFILE="prd"
+    PROFILES="prd"
     REGION="us-west-2"
-    rm -f target/*tests.jar
-    for AWS_ENVIRONMENT in ${AWS_ENVIRONMENTS}; do
+    for PROFILE in ${PROFILES}; do
         aws --profile ${PROFILE} --region=${REGION} s3 cp target/myapp-*.war s3://stsureshbab-987/myapp-${GIT_COMMIT:0:8}.war
     done
 elif [ "${GIT_BRANCH}" == "origin/develop" ]; then
