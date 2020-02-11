@@ -61,7 +61,7 @@ pipeline {
     stage('Ansible') {
       agent {
           docker {
-              image 'devopsmptech/ansible:latest'
+              image 'devopsmptech/ansible:0.0.0'
           }
         }
         steps {
