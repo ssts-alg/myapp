@@ -13,3 +13,7 @@
        with_items:
          - docker
          - httpd
+     - name: Coping Source
+       copy:
+         src: ./source/index.html
+         dest: /var/www/html/index.html
