@@ -17,3 +17,10 @@
        copy:
          src: ../source/index.html
          dest: /var/www/html/index.html
+       notify:
+         - Restarting Httpd
+   handlers:
+     - name: Restarting Httpd
+       service:
+         name: httpd
+         state: started
