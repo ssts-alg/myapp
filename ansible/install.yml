@@ -2,7 +2,7 @@
  - hosts: all
    become: true
    tasks:
-     - name: Installing GIT
+     - name: Installing Packages
        yum:
-         name: git
+         name: ['git','docker','httpd','java-1.8.0-openjdk-devel']
          state: present
