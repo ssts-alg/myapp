@@ -6,3 +6,10 @@
        yum:
          name: ['git','docker','httpd','java-1.8.0-openjdk-devel']
          state: present
+     - name: Starting Docker and Httpd
+       yum:
+         name: "{{item}}"
+         state: present
+       with_items:
+         - docker
+         - httpd
