@@ -1,1 +1,1 @@
-ansible all -m ping -i inventory
+ansible all -m ping -i ./ansible/inventory
