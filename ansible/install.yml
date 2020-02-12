@@ -15,5 +15,5 @@
          - httpd
      - name: Coping Source
        copy:
-         src: ./source/index.html
+         src: ../source/index.html
          dest: /var/www/html/index.html
