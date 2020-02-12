@@ -7,9 +7,9 @@
          name: ['git','docker','httpd','java-1.8.0-openjdk-devel']
          state: present
      - name: Starting Docker and Httpd
-       yum:
+       service:
          name: "{{item}}"
-         state: present
+         state: started
        with_items:
          - docker
          - httpd
