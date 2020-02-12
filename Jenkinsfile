@@ -8,8 +8,8 @@ pipeline {
   options { buildDiscarder(logRotator(numToKeepStr: '10')) }
   stages {
     stage('Ansible') {
-      withCredentials([usernameColonPassword(credentialsId: 'GitHub', variable: 'GIT_PRIVATE')]) {
         steps {
+         withCredentials([usernameColonPassword(credentialsId: 'GitHub', variable: 'GIT_PRIVATE')]) {
           sh '''
           ansible --version
           export ANSIBLE_HOST_KEY_CHECKING=False
