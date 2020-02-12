@@ -7,7 +7,10 @@ pipeline {
   stages {
     stage('Ansible') {
         steps {
-          sh "ansible --version"
+          sh '''
+          ansible --version
+          ./ansible/run_ansible.sh
+          '''
         }
     }
   }
