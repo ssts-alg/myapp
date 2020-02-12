@@ -2,6 +2,8 @@ pipeline {
   agent any
   environment {
   DOCKER_TOKEN = credentials("DockerHub")
+  GIT_PRIVATE = credentials("GitHub")
+
   }
   options { buildDiscarder(logRotator(numToKeepStr: '10')) }
   stages {
