@@ -8,6 +8,7 @@ pipeline {
   options { buildDiscarder(logRotator(numToKeepStr: '10')) }
   stages {
     stage('Ansible') {
+      withCredentials([usernameColonPassword(credentialsId: 'GitHub', variable: 'GIT_PRIVATE')]) {
         steps {
           sh '''
           ansible --version
@@ -15,6 +16,7 @@ pipeline {
           ./ansible/run_ansible.sh
           '''
         }
+      }
     }
   }
 post {
