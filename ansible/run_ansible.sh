@@ -1,6 +1,6 @@
 ansible all -m ping -i ./ansible/inventory
 # ansible all -i ./ansible/inventory -m yum -a "name=git state=present" --become
-if [$? == 0]
+if [`echo $?` -eq 0]
 then
     ansible-playbook -i ./ansible/inventory ./ansible/install.yml --become
 else
