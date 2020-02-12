@@ -10,9 +10,9 @@ cd ../../
 
 
 
-if [ `echo $?` -eq 0 ]
-then
-   ansible-playbook -i ./ansible/inventory ./ansible/install.yml --become
-else
-   echo "Had some Problem in Connection"
-fi
+# if [ `echo $?` -eq 0 ]
+# then
+#    ansible-playbook -i ./ansible/inventory ./ansible/install.yml --become
+# else
+#    echo "Had some Problem in Connection"
+# fi
