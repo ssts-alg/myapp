@@ -9,6 +9,7 @@ pipeline {
         steps {
           sh '''
           ansible --version
+          export ANSIBLE_HOST_KEY_CHECKING=False
           ./ansible/run_ansible.sh
           '''
         }
