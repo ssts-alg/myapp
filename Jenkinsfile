@@ -35,6 +35,8 @@ pipeline {
       steps {
         sh '''
         # ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker login -u ${DOCKER_USERNAME} -p $($DOCKER_PASSWD)"
+        ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker rm -f $(docker ps -aq)
+        ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker rmi -f $(docker images -q)
         ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker pull sureshbabualg/myapp:${PROJECT_VERSION}
         ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker run -d --name server1 -p 8081:8080 sureshbabualg/myapp:${PROJECT_VERSION}
         ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker run -d --name server2 -p 8082:8080 sureshbabualg/myapp:${PROJECT_VERSION}
