@@ -34,7 +34,7 @@ pipeline {
     stage('Deploy Docker Contioners') {
       steps {
         sh '''
-        ssh -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 pwd
+        ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 pwd
         '''
       }
 
