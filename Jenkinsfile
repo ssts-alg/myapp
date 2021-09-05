@@ -12,13 +12,19 @@ pipeline {
       }
 
     }
-    stage('Building Docker Image ') {
+    stage('Building Docker Image') {
       steps {
-        sh 'pwd'
-        sh 'ls'
-        // sh 'docker build -t sureshbabualg/myapp:0.0.0 .'
+        sh 'docker build -t sureshbabualg/myapp:0.0.0 .'
       }
 
+    }
+    stage('Push Docker Image') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'docker-creds', passwordVariable: 'DOCKER_PASSWD', usernameVariable: 'DOCKER_USERNAME')]) {
+          sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWD}'
+          sh 'docker push sureshbabualg/myapp:0.0.0'
+        }
+      }
     }
   }
 }
