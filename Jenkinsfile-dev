@@ -30,5 +30,14 @@ pipeline {
       }
 
     }
+    stage('4th Stage') {
+      steps {
+        sh '''
+        echo echo "My name is ${USER_NAME}"
+        echo "welcome"
+        '''
+      }
+
+    }
   }
 }
