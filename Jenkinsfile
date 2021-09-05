@@ -15,6 +15,7 @@ pipeline {
     stage('Building Docker Image ') {
       steps {
         sh 'pwd'
+        sh 'ls'
         // sh 'docker build -t sureshbabualg/myapp:0.0.0 .'
       }
 
