@@ -21,7 +21,7 @@ pipeline {
 
     }
     stage('Push Docker Image') {
-      when { branch: 'master'}
+      when { branch 'master'}
       steps {
         withCredentials([usernamePassword(credentialsId: 'docker-creds', passwordVariable: 'DOCKER_PASSWD', usernameVariable: 'DOCKER_USERNAME')]) {
           sh '''
@@ -33,7 +33,7 @@ pipeline {
       }
     }
     stage('Deploy Docker Contioners') {
-      when { branch: 'master'}
+      when { branch 'master'}
       steps {
         sh '''
         # ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker login -u ${DOCKER_USERNAME} -p $($DOCKER_PASSWD)"
