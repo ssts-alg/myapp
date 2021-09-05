@@ -26,7 +26,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'docker-creds', passwordVariable: 'DOCKER_PASSWD', usernameVariable: 'DOCKER_USERNAME')]) {
           sh '''
           project_version=$(cat pom.xml | grep "version" | head -1 | awk '{print $1}' | sed "s/<version>//" | sed "s/<.*//")
-          docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWD}'
+          docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWD}
           docker push sureshbabualg/myapp:${project_version}
           '''
         }
