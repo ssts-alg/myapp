@@ -21,7 +21,12 @@ pipeline {
 
     }
     stage('Push Docker Image') {
-      when { branch 'master'}
+      when {
+        anyOf {
+        branch 'master'
+        branch 'develop'
+      }
+    }
       steps {
         withCredentials([usernamePassword(credentialsId: 'docker-creds', passwordVariable: 'DOCKER_PASSWD', usernameVariable: 'DOCKER_USERNAME')]) {
           sh '''
@@ -32,8 +37,8 @@ pipeline {
         }
       }
     }
-    stage('Deploy Docker Contioners') {
-      when { branch 'master'}
+    stage('Deploy Docker Contioners in dev') {
+      when { branch 'develop'}
       steps {
         sh '''
         # ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker login -u ${DOCKER_USERNAME} -p $($DOCKER_PASSWD)"
@@ -41,6 +46,20 @@ pipeline {
         ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker pull sureshbabualg/myapp:${PROJECT_VERSION}
         ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker run -d --name server1 -p 8081:8080 sureshbabualg/myapp:${PROJECT_VERSION}
         ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.43 docker run -d --name server2 -p 8082:8080 sureshbabualg/myapp:${PROJECT_VERSION}
+
+        '''
+      }
+
+    }
+    stage('Deploy Docker Contioners in prd') {
+      when { branch 'master'}
+      steps {
+        sh '''
+        # ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.3 docker login -u ${DOCKER_USERNAME} -p $($DOCKER_PASSWD)"
+        ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.3 docker rm -f server1 server2
+        ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.3 docker pull sureshbabualg/myapp:${PROJECT_VERSION}
+        ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.3 docker run -d --name server1 -p 8081:8080 sureshbabualg/myapp:${PROJECT_VERSION}
+        ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/docker.pem ec2-user@54.234.173.3 docker run -d --name server2 -p 8082:8080 sureshbabualg/myapp:${PROJECT_VERSION}
 
         '''
       }
