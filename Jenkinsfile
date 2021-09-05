@@ -16,7 +16,7 @@ pipeline {
       steps {
         sh '''
         project_version=$(cat pom.xml | grep "version" | head -1 | awk '{print $1}' | sed "s/<version>//" | sed "s/<.*//")
-        docker build -t sureshbabualg/myapp:$project_version .
+        docker build -t sureshbabualg/myapp:${project_version} .
         '''
       }
 
@@ -27,7 +27,7 @@ pipeline {
           sh '''
           project_version=$(cat pom.xml | grep "version" | head -1 | awk '{print $1}' | sed "s/<version>//" | sed "s/<.*//")
           docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWD}'
-          docker push sureshbabualg/myapp:$project_version
+          docker push sureshbabualg/myapp:${project_version}
           '''
         }
       }
