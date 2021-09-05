@@ -1,0 +1,34 @@
+pipeline {
+  agent any
+  environment {
+    USER_NAME = "Mahesh"
+    AWS_REGION = "us-west-2"
+    
+  }
+  stages {
+    stage('First Stage') {
+      steps {
+        sh 'echo "My name is ${USER_NAME}"'
+      }
+
+    }
+    stage('Second Stage') {
+      steps {
+        sh 'echo "My name is ${USER_NAME}"'
+        sh 'ls'
+        sh 'pwd'
+      }
+
+    }
+    stage('Third Stage') {
+      steps {
+        sh '''
+        echo echo "My name is ${USER_NAME}"
+        ls
+        pwd
+        '''
+      }
+
+    }
+  }
+}
