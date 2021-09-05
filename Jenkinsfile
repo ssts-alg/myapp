@@ -1,29 +1,16 @@
 pipeline {
   agent any
   environment {
-  DOCKER_TOKEN = credentials("DockerHub")
-  GIT_PRIVATE = credentials("GitHub")
+    USER_NAME = "Mahesh"
+    AWS_REGION = "us-west-2"
 
   }
-  options { buildDiscarder(logRotator(numToKeepStr: '10')) }
   stages {
-    stage('Ansible') {
-        steps {
-         withCredentials([usernameColonPassword(credentialsId: 'GitHub', variable: 'GIT_PRIVATE')]) {
-          sh '''
-          ansible --version
-          export ANSIBLE_HOST_KEY_CHECKING=False
-          ./ansible/run_ansible.sh
-          '''
-        }
+    stage('Maven Build') {
+      steps {
+        sh 'mvn clean package'
       }
+
     }
-  }
-post {
-  always {
-          sh '''
-            echo "I will execure always"
-          '''
-        }
   }
 }
