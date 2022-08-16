@@ -5,7 +5,9 @@
       copy:
         src: /var/lib/jenkins/workspace/maven-build/target/myapp.war
         dest: /home/ec2-user/apache-tomcat-8.5.82/webapps
-    - name: shutdown server
-      shell: "/home/ec2-user/apache-tomcat-8.5.82/bin/shutdown.sh"
     - name: start server
-      shell: "/home/ec2-user/apache-tomcat-8.5.82/bin/startup.sh"
+      command: "sh /home/ec2-user/apache-tomcat-8.5.82/bin/startup.sh"
+    - name: shutdown server1
+      command: "sh /home/ec2-user/apache-tomcat-8.5.82/bin/shutdown.sh"
+    - name: start server1
+      command: "sh /home/ec2-user/apache-tomcat-8.5.82/bin/startup.sh"
