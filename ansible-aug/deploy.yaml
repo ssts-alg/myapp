@@ -6,8 +6,9 @@
         src: /var/lib/jenkins/workspace/maven-build/target/myapp.war
         dest: /home/ec2-user/apache-tomcat-8.5.82/webapps
     - name: start server
-      command: "sh /home/ec2-user/apache-tomcat-8.5.82/bin/startup.sh"
-    - name: shutdown server1
-      command: "sh /home/ec2-user/apache-tomcat-8.5.82/bin/shutdown.sh"
-    - name: start server1
-      command: "sh /home/ec2-user/apache-tomcat-8.5.82/bin/startup.sh"
+      copy:
+        src: script.sh
+        dest: /home/ec2-user/script.sh
+        mode: '0777'
+    - name: run server
+      command: "sh /home/ec2-user/script.sh"
