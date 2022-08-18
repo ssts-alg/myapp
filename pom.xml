@@ -31,14 +31,15 @@
 		 <snapshotRepository>
 		    <id>nexus</id>
 		    <name>Internal Snapshot Releases</name>
-		    <url>http://3.235.168.215:8081/repository/mtapp-snapshot/</url>
+		    <url>http://18.212.177.113:8081/repository/maven-snapshots/</url>
 		 </snapshotRepository>
 
 		<repository>
 		    <id>nexus</id>
 		    <name>Internal Releases</name>
-		    <url>http://3.235.168.215:8081/repository/myapp-release/</url>
+		    <url>http://18.212.177.113:8081/repository/myapp/</url>
 		</repository>
+
   	</distributionManagement>
 <build>
     <plugins>
