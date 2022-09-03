@@ -18,7 +18,7 @@ spec:
         app: myapp
     spec:
       containers:
-      - image: sstechnosolutions/myapp:v2
+      - image: sstechnosolutions/myapp:v3
         imagePullPolicy: Always
         name: myapp
         ports:
