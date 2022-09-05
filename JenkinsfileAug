@@ -3,6 +3,7 @@ pipeline {
   environment {
     PROJECT_VERSION=project_version()
     AWS_REGION= "us-west-2"
+    CLUSTER_NAME="eksdemo-live1"
   }
   stages {
     //stage('GitCheckout') {
@@ -30,6 +31,18 @@ pipeline {
           sh '''
           docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWD
           docker push sstechnosolutions/testapp:$PROJECT_VERSION
+          '''
+        }
+      }
+    }
+    stage('DownLoad Kube Config') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY')]) {
+          sh '''
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws configure set default.region $AWS_REGION
+          aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
           '''
         }
       }
