@@ -1,0 +1,42 @@
+pipeline {
+  agent any
+  environment {
+    PROJECT_VERSION=project_version()
+    AWS_REGION= "us-west-2"
+  }
+  stages {
+    stage('GitCheckout') {
+      steps{
+      git credentialsId: 'GitHubCreds', url: 'https://github.com/ssts-alg/myapp.git'
+      }
+    }
+    stage('Maven Build') {
+      steps {
+        sh '''
+        mvn clean package
+        '''
+      }
+    }
+    stage('Docker Build') {
+      steps {
+        sh '''
+        docker build -t sstechnosolutions/testapp:$PROJECT_VERSION .
+        '''
+      }
+    }
+    stage('Docker Push To Dockerhub') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'dockerHubPasswd', passwordVariable: 'DOCKERHUB_PASSWD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+          sh '''
+          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWD
+          docker push sstechnosolutions/testapp:$PROJECT_VERSION
+          '''
+        }
+      }
+    }
+  }
+}
+
+def project_version() {
+   return sh(returnStdout: true, script:"cat pom.xml | grep \"version\" | head -1 | awk \'{print \$1}\' |  sed \"s/<version>//\" | sed \"s/<.*//\"")
+ }
