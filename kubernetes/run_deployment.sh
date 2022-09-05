@@ -1,32 +1,7 @@
 #! /bin/bash
 
-deployment_template="""
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: myapp
-spec:
-  replicas: 4
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-  selector:
-    matchLabels:
-      app: myapp
-  template:
-    metadata:
-      labels:
-        app: myapp
-    spec:
-      containers:
-      - image: sstechnosolutions/testapp:$PROJECTVERSION
-        imagePullPolicy: Always
-        name: myapp
-        ports:
-        - containerPort: 8080
-"""
-echo $deployment_template > kubernetes/deployment.yaml
-cat kubernetes/deployment.yaml
-kubectl apply -f kubernetes/deployment.yaml
+PROJECT_VERSION=$(cat pom.xml | grep "version" | head -1 | awk '{print $1}' |  sed "s/<version>//" | sed "s/<.*//")
+sed  "s/PROJECTVERSION/$PROJECT_VERSION/g" kubernetes/deployment.yaml > kubernetes/deployment1.yaml
+cat kubernetes/deployment1.yaml
+kubectl apply -f kubernetes/deployment1.yaml
+# kubectl apply -f kubernetes/deployment.yaml
