@@ -49,7 +49,11 @@ pipeline {
     }
     stage('Kubernetes Deploy') {
       steps {
-        sh 'bash kubernetes/run_deployment.sh'
+        sh """#!/bin/bash
+         cat kubernetes/deployment.yaml | grep PROJECTVERSION
+         sed -i 's|PROJECTVERSION: .*|PROJECTVERSION: "${PROJECT_VERSION}"|' kubernetes/deployment.yaml
+         kubectl apply -f kubernetes/deployment.yaml
+         """
       }
     }
     stage('Kubernetes Deploy Service') {
