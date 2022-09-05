@@ -28,5 +28,5 @@ spec:
         - containerPort: 8080
 """
 echo $deployment_template > kubernetes/deployment.yaml
-
+cat kubernetes/deployment.yaml
 kubectl apply -f kubernetes/deployment.yaml
