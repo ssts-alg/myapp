@@ -1,11 +1,32 @@
 #! /bin/bash
 
-project_version=$PROJECT_VERSION
-# echo $PROJECT_VERSION
-# PROJECT_VERSION=$(cat pom.xml | grep "version" | head -1 | awk '{print $1}' |  sed "s/<version>//" | sed "s/<.*//")
-sed -i """s/PROJECTVERSION/${project_version}/""" kubernetes/deployment.yaml
-kubectl apply -f kubernetes/deployment.yaml
-cat kubernetes/deployment.yaml
-# kubectl apply -f kubernetes/deployment.yaml
+deployment_template="""
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - image: sstechnosolutions/testapp:$PROJECTVERSION
+        imagePullPolicy: Always
+        name: myapp
+        ports:
+        - containerPort: 8080
+"""
+echo $deployment_template > kubernetes/deployment.yaml
 
-# cat kubernetes/deployment.yaml | awk "{gsub(/PROJECTVERSION/,${PROJECT_VERSION})}1"
+kubectl apply -f kubernetes/deployment.yaml
