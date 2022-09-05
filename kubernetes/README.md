@@ -8,3 +8,4 @@ Installation Steps in Jenkins
   sudo mv ./kubectl /usr/local/bin
   kubectl version --client
   ```
+4. Download kube config file.
