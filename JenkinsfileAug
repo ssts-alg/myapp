@@ -51,7 +51,7 @@ pipeline {
       steps {
         sh """#!/bin/bash
          cat kubernetes/deployment.yaml | grep PROJECTVERSION
-         sed -i 's|PROJECTVERSION: .*|PROJECTVERSION: "${PROJECT_VERSION}"|' kubernetes/deployment.yaml
+         sed -i 's|PROJECTVERSION: .*|PROJECTVERSION: \"\${PROJECT_VERSION}\"|' kubernetes/deployment.yaml
          kubectl apply -f kubernetes/deployment.yaml
          """
       }
