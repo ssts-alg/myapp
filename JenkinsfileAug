@@ -6,12 +6,6 @@ pipeline {
     CLUSTER_NAME="eksdemo-live1"
   }
 
-
-  parameters {
-      string(defaultValue: "", description: 'Choose Git Tag?', name: 'GIT_TAG_VALUE')
-  }
-
-
   stages {
     //stage('GitCheckout') {
       //steps{
