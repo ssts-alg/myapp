@@ -5,6 +5,15 @@ pipeline {
     AWS_REGION= "us-west-2"
     CLUSTER_NAME="eksdemo-live1"
   }
+
+
+  parameters {
+      string(defaultValue: "eksdemo-live1", description: 'Choose Cluster Name?', name: 'CLUSTER_NAME')
+      choice(choices: 'us-west-2\nus-eat-1\neu-west-2', description: 'Choose AWS region?', name: 'AWS_REGION')
+      password(defaultValue: "", description: "DockerHu Password", name: "PASSWORD_DOCKER")
+  }
+
+
   stages {
     //stage('GitCheckout') {
       //steps{
@@ -26,22 +35,18 @@ pipeline {
       }
     }
     stage('Docker Push To Dockerhub') {
-      when {
-        branch 'master'
-      }
+      when { branch 'master'}
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHubPasswd', passwordVariable: 'DOCKERHUB_PASSWD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
           sh '''
-          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWD
+          docker login -u $DOCKERHUB_USERNAME -p $PASSWORD_DOCKER
           docker push sstechnosolutions/testapp:$PROJECT_VERSION
           '''
         }
       }
     }
     stage('DownLoad Kube Config') {
-      when {
-        branch 'master'
-      }
+      when { branch 'master' }
       steps {
         withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY')]) {
           sh '''
@@ -54,9 +59,7 @@ pipeline {
       }
     }
     stage('Kubernetes Deploy') {
-      when {
-        branch 'master'
-      }
+      when { branch 'master' }
       steps {
         sh 'sh kubernetes/run_deployment.sh'
       }
