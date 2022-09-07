@@ -26,6 +26,9 @@ pipeline {
       }
     }
     stage('Docker Push To Dockerhub') {
+      when {
+        branch 'master'
+      }
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHubPasswd', passwordVariable: 'DOCKERHUB_PASSWD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
           sh '''
@@ -36,6 +39,9 @@ pipeline {
       }
     }
     stage('DownLoad Kube Config') {
+      when {
+        branch 'master'
+      }
       steps {
         withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY')]) {
           sh '''
@@ -48,11 +54,15 @@ pipeline {
       }
     }
     stage('Kubernetes Deploy') {
+      when {
+        branch 'master'
+      }
       steps {
         sh 'sh kubernetes/run_deployment.sh'
       }
     }
     stage('Kubernetes Deploy Service') {
+    when { branch 'master' }
       steps {
         sh 'kubectl apply -f kubernetes/service.yaml'
       }
