@@ -2,15 +2,13 @@ pipeline {
   agent any
   environment {
     PROJECT_VERSION=project_version()
-    //AWS_REGION= "us-west-2"
-    //CLUSTER_NAME="eksdemo-live1"
+    AWS_REGION= "us-west-2"
+    CLUSTER_NAME="eksdemo-live1"
   }
 
 
   parameters {
-      string(defaultValue: "eksdemo-live1", description: 'Choose Cluster Name?', name: 'CLUSTER_NAME')
-      choice(choices: 'us-west-2\nus-east-1\neu-west-2', description: 'Choose AWS region?', name: 'AWS_REGION')
-      password(defaultValue: "", description: "DockerHu Password", name: "PASSWORD_DOCKER")
+      string(defaultValue: "", description: 'Choose Git Tag?', name: 'GIT_TAG_VALUE')
   }
 
 
